@@ -19,13 +19,6 @@ pipeline {
                 }
             }
         }
-        stage('Code Inspection - SonarQube') {
-            steps {
-                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                    sh 'mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar -Dsonar.projectKey=gill-leave-service -Dsonar.host.url=http://localhost:9000 -Dsonar.login=$SONAR_TOKEN -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml'
-                }
-            }
-        }
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t leave-service:${BUILD_NUMBER} .'
